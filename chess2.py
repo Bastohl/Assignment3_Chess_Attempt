@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from moves2 import Castle, King, Pawn, Queen, Empty
+from moves2 import Pawn, King, Castle, Bishop, Queen, Empty
 class Square:
     def __init__(self, data, board):
         self.data= data #includes color, coordinate
@@ -11,8 +11,8 @@ class Square:
 
     def createSquare(self):
         self.square= ctk.CTkButton(self.board.board,
-                                   width=100, height=100, 
-                                   text=self.piece.graphic, text_color= self.piece.color, font= ctk.CTkFont(size=50), 
+                                   width=90, height=90, 
+                                   text=self.piece.graphic, text_color= self.piece.color, font= ctk.CTkFont(size=40), 
                                    fg_color= self.data['color'], hover_color= '#94b06c', text_color_disabled= self.piece.player.disableColor,
                                    corner_radius= 3.5,
                                    command= lambda: self.getMoves())
@@ -80,7 +80,7 @@ class Board:
     def __init__(self, squaresData, pieceTypes):
         self.squaresData= squaresData
         self.pieceTypes= pieceTypes
-        self.board= ctk.CTk(); self.board.geometry('400x400'); self.board.title('4x4 Silverman Chess') #create the ui board        
+        self.board= ctk.CTk(); self.board.geometry('360x450'); self.board.title('4x4 Silverman Chess') #create the ui board        
         self.players= [Player(n, self) for n in range(2)] #create 2 players with unique numbers
         self.squares= []
         self.moving= False
@@ -91,10 +91,10 @@ class Board:
         for p in range(len(self.pieceTypes)):
             pieceType= self.pieceTypes[p]            
             square= self.squares[p]
-            if p<=7:
+            if p<=9:
                 player= self.players[0]
                 Piece(pieceType, player, square)
-            if p>=8:
+            if p>=10:
                 player= self.players[1]
                 Piece(pieceType, player, square)
 
@@ -120,15 +120,17 @@ class Board:
             self.squares.append(new_square)
         self.linkSquares()
 
-pieceTypes= [Castle, Queen, King, Castle, 
-             Pawn, Pawn, Pawn, Pawn, 
-             Pawn, Pawn, Pawn, Pawn, 
-             Castle, Queen, King, Castle]
+pieceTypes= [Bishop, Queen, King, Castle,
+             Pawn, Pawn, Pawn, Pawn,
+             Empty,Empty,Empty,Empty,
+             Pawn, Pawn, Pawn, Pawn,
+             Bishop, Queen, King, Castle]
 n= None; lb= '#c6947a'; db= '#7c4529'
 squaresData= [{'x':0, 'y':0.00, 'color':lb, 'links':[n,n,n,  n,1, n,4,5]},   {'x':0.25, 'y':0.00, 'color':db, 'links':[n,n,n, 0,2, 4,5,6]},     {'x':0.50, 'y':0.00, 'color':lb, 'links':[n,n,n, 1,3, 5,6,7]},     {'x':0.75, 'y':0.00, 'color':db, 'links':[n,n,n, 2,n, 6,7,n]},
-              {'x':0, 'y':0.25, 'color':db, 'links':[n,0,1,  n,5, n,8,9]},   {'x':0.25, 'y':0.25, 'color':lb, 'links':[0,1,2, 4,6, 8,9,10]},    {'x':0.50, 'y':0.25, 'color':db, 'links':[1,2,3, 5,7, 9,10,11]},   {'x':0.75, 'y':0.25, 'color':lb, 'links':[2,3,n, 6,n, 10,11,n]},
-              {'x':0, 'y':0.50, 'color':lb, 'links':[n,4,5,  n,9, n,12,13]}, {'x':0.25, 'y':0.50, 'color':db, 'links':[4,5,6, 8,10, 12,13,14]}, {'x':0.50, 'y':0.50, 'color':lb, 'links':[5,6,7, 9,11, 13,14,15]}, {'x':0.75, 'y':0.50, 'color':db, 'links':[6,7,n, 10,n, 14,15,n]},
-              {'x':0, 'y':0.75, 'color':db, 'links':[n,8,9, n,13, n,n,n]},   {'x':0.25, 'y':0.75, 'color':lb, 'links':[8,9,10, 12,14, n,n,n]},  {'x':0.50, 'y':0.75, 'color':db, 'links':[9,10,11, 13,15, n,n,n]}, {'x':0.75, 'y':0.75, 'color':lb, 'links':[10,11,n, 14,n, n,n,n]}]
+              {'x':0, 'y':0.20, 'color':db, 'links':[n,0,1,  n,5, n,8,9]},   {'x':0.25, 'y':0.20, 'color':lb, 'links':[0,1,2, 4,6, 8,9,10]},    {'x':0.50, 'y':0.20, 'color':db, 'links':[1,2,3, 5,7, 9,10,11]},   {'x':0.75, 'y':0.20, 'color':lb, 'links':[2,3,n, 6,n, 10,11,n]},
+              {'x':0, 'y':0.40, 'color':lb, 'links':[n,4,5,  n,9, n,12,13]}, {'x':0.25, 'y':0.40, 'color':db, 'links':[4,5,6, 8,10, 12,13,14]}, {'x':0.50, 'y':0.40, 'color':lb, 'links':[5,6,7, 9,11, 13,14,15]}, {'x':0.75, 'y':0.40, 'color':db, 'links':[6,7,n, 10,n, 14,15,n]},
+              {'x':0, 'y':0.60, 'color':db, 'links':[n,8,9,  n,13, n,16,17]}, {'x':0.25, 'y':0.60, 'color':lb, 'links':[8,9,10, 12,14, 16,17,18]}, {'x':0.50, 'y':0.60, 'color':db, 'links':[9,10,11, 13,15, 17,18,19]}, {'x':0.75, 'y':0.60, 'color':lb, 'links':[10,11,n, 14,n, 18,19,n]},
+              {'x':0, 'y':0.80, 'color':lb, 'links':[n,12,13, n,18, n,n,n]},   {'x':0.25, 'y':0.80, 'color':db, 'links':[12,13,14, 16,18, n,n,n]},  {'x':0.50, 'y':0.80, 'color':lb, 'links':[13,14,15, 17,19, n,n,n]}, {'x':0.75, 'y':0.80, 'color':db, 'links':[14,15,n, 18,n, n,n,n]}]
 
 board1= Board(squaresData, pieceTypes)
 board1.createSquares()
