@@ -80,7 +80,7 @@ class Board:
     def __init__(self, squaresData, pieceTypes):
         self.squaresData= squaresData
         self.pieceTypes= pieceTypes
-        self.board= ctk.CTk(); self.board.geometry('360x450'); self.board.title('4x4 Silverman Chess') #create the ui board        
+        self.board= ctk.CTk(); self.board.geometry('360x450'); self.board.title('4x5 Silverman Chess') #create the ui board        
         self.players= [Player(n, self) for n in range(2)] #create 2 players with unique numbers
         self.squares= []
         self.moving= False
@@ -120,12 +120,13 @@ class Board:
             self.squares.append(new_square)
         self.linkSquares()
 
-pieceTypes= [Bishop, Queen, King, Castle,
+pieceTypes= [Castle, Queen, Bishop, King,
              Pawn, Pawn, Pawn, Pawn,
              Empty,Empty,Empty,Empty,
              Pawn, Pawn, Pawn, Pawn,
-             Bishop, Queen, King, Castle]
-n= None; lb= '#c6947a'; db= '#7c4529'
+             Castle, Queen, Bishop, King,]
+
+n= None; lb= '#d8b380'; db= '#8c5622'
 squaresData= [{'x':0, 'y':0.00, 'color':lb, 'links':[n,n,n,  n,1, n,4,5]},   {'x':0.25, 'y':0.00, 'color':db, 'links':[n,n,n, 0,2, 4,5,6]},     {'x':0.50, 'y':0.00, 'color':lb, 'links':[n,n,n, 1,3, 5,6,7]},     {'x':0.75, 'y':0.00, 'color':db, 'links':[n,n,n, 2,n, 6,7,n]},
               {'x':0, 'y':0.20, 'color':db, 'links':[n,0,1,  n,5, n,8,9]},   {'x':0.25, 'y':0.20, 'color':lb, 'links':[0,1,2, 4,6, 8,9,10]},    {'x':0.50, 'y':0.20, 'color':db, 'links':[1,2,3, 5,7, 9,10,11]},   {'x':0.75, 'y':0.20, 'color':lb, 'links':[2,3,n, 6,n, 10,11,n]},
               {'x':0, 'y':0.40, 'color':lb, 'links':[n,4,5,  n,9, n,12,13]}, {'x':0.25, 'y':0.40, 'color':db, 'links':[4,5,6, 8,10, 12,13,14]}, {'x':0.50, 'y':0.40, 'color':lb, 'links':[5,6,7, 9,11, 13,14,15]}, {'x':0.75, 'y':0.40, 'color':db, 'links':[6,7,n, 10,n, 14,15,n]},

@@ -65,7 +65,7 @@ class LongRange:
             pass
         elif opponentPlayer:
             self.links[self.link].append(square)
-        else:        
+        else:
             self.links[self.link].append(square)
             self.getSquares(square.links[self.link])                
 
@@ -89,7 +89,7 @@ class Castle(LongRange):
 
 class Bishop(LongRange):
     def __init__(self, piece):
-        self.graphic= {'black':'♗', 'white':'♝'}
+        self.graphic= {'black':'♝', 'white':'♝'}
         self.piece= piece
         self.links= {'diagpp':[], 'diagnp':[], 'diagnn':[], 'diagpn':[]}
         super().__init__(self.graphic, self.piece, self.links)
