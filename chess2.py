@@ -131,7 +131,7 @@ squaresData= [{'x':0, 'y':0.00, 'color':lb, 'links':[n,n,n,  n,1, n,4,5]},   {'x
               {'x':0, 'y':0.20, 'color':db, 'links':[n,0,1,  n,5, n,8,9]},   {'x':0.25, 'y':0.20, 'color':lb, 'links':[0,1,2, 4,6, 8,9,10]},    {'x':0.50, 'y':0.20, 'color':db, 'links':[1,2,3, 5,7, 9,10,11]},   {'x':0.75, 'y':0.20, 'color':lb, 'links':[2,3,n, 6,n, 10,11,n]},
               {'x':0, 'y':0.40, 'color':lb, 'links':[n,4,5,  n,9, n,12,13]}, {'x':0.25, 'y':0.40, 'color':db, 'links':[4,5,6, 8,10, 12,13,14]}, {'x':0.50, 'y':0.40, 'color':lb, 'links':[5,6,7, 9,11, 13,14,15]}, {'x':0.75, 'y':0.40, 'color':db, 'links':[6,7,n, 10,n, 14,15,n]},
               {'x':0, 'y':0.60, 'color':db, 'links':[n,8,9,  n,13, n,16,17]}, {'x':0.25, 'y':0.60, 'color':lb, 'links':[8,9,10, 12,14, 16,17,18]}, {'x':0.50, 'y':0.60, 'color':db, 'links':[9,10,11, 13,15, 17,18,19]}, {'x':0.75, 'y':0.60, 'color':lb, 'links':[10,11,n, 14,n, 18,19,n]},
-              {'x':0, 'y':0.80, 'color':lb, 'links':[n,12,13, n,18, n,n,n]},   {'x':0.25, 'y':0.80, 'color':db, 'links':[12,13,14, 16,18, n,n,n]},  {'x':0.50, 'y':0.80, 'color':lb, 'links':[13,14,15, 17,19, n,n,n]}, {'x':0.75, 'y':0.80, 'color':db, 'links':[14,15,n, 18,n, n,n,n]}]
+              {'x':0, 'y':0.80, 'color':lb, 'links':[n,12,13, n,17, n,n,n]},   {'x':0.25, 'y':0.80, 'color':db, 'links':[12,13,14, 16,18, n,n,n]},  {'x':0.50, 'y':0.80, 'color':lb, 'links':[13,14,15, 17,19, n,n,n]}, {'x':0.75, 'y':0.80, 'color':db, 'links':[14,15,n, 18,n, n,n,n]}]
 
 board1= Board(squaresData, pieceTypes)
 board1.createSquares()
