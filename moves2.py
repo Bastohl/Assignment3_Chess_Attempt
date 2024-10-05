@@ -8,7 +8,7 @@ class ShortRange:
     def getSquares(self, square):  
         samePlayer= False
         opponentPlayer= False
-        if square and square.piece:
+        if square!=None and square.piece:
             samePlayer= (square.piece.player.number == self.piece.player.number) and (square.piece.piece.playing)
             opponentPlayer= (square.piece.player.number != self.piece.player.number) and (square.piece.piece.playing)
         outsideBoard= (not square)
@@ -57,7 +57,7 @@ class LongRange:
     def getSquares(self, square):
         samePlayer= False
         opponentPlayer= False
-        if square and square.piece:      
+        if square!=None and square.piece:      
             samePlayer= (square.piece.player.number == self.piece.player.number) and (square.piece.piece.playing)
             opponentPlayer= (square.piece.player.number != self.piece.player.number) and (square.piece.piece.playing)            
         outsideBoard= (not square)        

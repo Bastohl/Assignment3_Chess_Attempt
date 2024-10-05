@@ -106,7 +106,7 @@ class Board:
             for l in range(len(links)):
                 link= links[l]
                 next_link= linkOrder[l] # uses the links index so that it can get its corresponding name in the linkOrder list
-                if link:
+                if link!=None:
                     square_link= self.squares[link]
                     square.links[next_link]= square_link
         self.createPieces()
