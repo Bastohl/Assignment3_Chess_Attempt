@@ -101,6 +101,28 @@ class Queen(LongRange):
         self.links= {'diagpp':[], 'diagnp':[], 'diagnn':[], 'diagpn':[], 'above':[], 'below':[], 'right':[], 'left':[]}
         super().__init__(self.graphic, self.piece, self.links)
 
+class Horse():
+    def __init__(self, piece):
+        self.graphic= {'black':'♘', 'white':'♞'}
+        self.piece= piece
+        self.playing= True
+
+    def getMoves(self):
+        self.links= {'abover':['above','diagpp'], 'abovel':['above','diagnp'], 'belowl':['below','diagnn'], 'belowr':['below','diagpn'], 
+                     'righta':['right','diagpp'], 'lefta':['left','diagnp'], 'leftb':['left','diagnn'], 'rightn':['right','diagpn']}
+        self.pLinks= self.piece.square.links
+        for link in self.links.keys():
+            linkV= self.links[link]
+            second= None
+            first= self.piece.square.links[linkV[0]]
+            if first:
+                second= first.links[linkV[1]]
+            if second:
+                if second.piece.player.number== self.piece.player.number and second.piece.piece.playing:
+                    second= None
+            self.links[link]= second
+        return list(self.links.values())
+
 class Empty:
     def __init__(self, piece):
         self.graphic= {'black':None, 'white':None}

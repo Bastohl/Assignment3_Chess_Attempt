@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from moves2 import Pawn, King, Castle, Bishop, Queen, Empty
+from moves2 import Pawn, King, Castle, Bishop, Horse, Queen, Empty
 class Square:
     def __init__(self, data, board):
         self.data= data #includes color, coordinate
@@ -58,8 +58,8 @@ class Square:
 class Piece:
     def __init__(self, name, player, square):        
         self.player= player
-        self.piece= name(self)
         self.square= square
+        self.piece= name(self)        
         self.color= self.player.color
         self.graphic= self.piece.graphic[self.color]             
         self.square.piece= self
@@ -121,12 +121,12 @@ class Board:
         self.linkSquares()
 
 pieceTypes = [
-    Castle, Bishop, Queen, King, Castle, 
+    Castle, Bishop, Queen, King, Horse, 
     Pawn, Pawn, Pawn, Pawn, Pawn, 
     Empty, Empty, Empty, Empty, Empty,
     Empty, Empty, Empty, Empty, Empty,
     Pawn, Pawn, Pawn, Pawn, Pawn, 
-    Castle, Bishop, Queen, King, Castle
+    Castle, Bishop, Queen, King, Horse
 ]
 
 n = None
