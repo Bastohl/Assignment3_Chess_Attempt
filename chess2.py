@@ -1,21 +1,14 @@
 import customtkinter as ctk
-from moves2 import Pawn, King, Rook, Bishop, Knight, Queen, Empty
+from Moves import Pawn, King, Rook, Bishop, Knight, Queen, Empty
 class Square:
     def __init__(self, data, board):
         self.data= data #includes color, coordinate
         self.board= board
         self.piece= None        
-        self.links= {'diagnp':None, 'above':None, 'diagpp':None,
-                       'left':None,               'right':None,
-                     'diagnn':None, 'below':None, 'diagpn':None}
+        self.links= {'diagnp':None,'above':None,'diagpp':None,'left':None,'right':None,'diagnn':None,'below':None,'diagpn':None}
 
     def createSquare(self):
-        self.square= ctk.CTkButton(self.board.board,
-                                   width=90, height=90, 
-                                   text=self.piece.graphic, text_color= self.piece.color, font= ctk.CTkFont(size=45), 
-                                   fg_color= self.data['color'], hover_color= '#94b06c', text_color_disabled= self.piece.player.disableColor,
-                                   corner_radius= 3.5,
-                                   command= lambda: self.getMoves())
+        self.square= ctk.CTkButton(self.board.board,width=100, height=100, text=self.piece.graphic, text_color= self.piece.color, font= ctk.CTkFont(size=45), fg_color= self.data['color'], hover_color= '#94b06c', text_color_disabled= self.piece.player.disableColor,corner_radius= 2,command= lambda: self.getMoves())
         self.square.place(relx= self.data['x'], rely=self.data['y'])
 
     def reverseLinks(self):
@@ -25,13 +18,15 @@ class Square:
         for l in range(len(linksCopy)):
             self.links[links[l]]= linksCopy[l] 
 
-    def movePiece(self):        
+    def movePiece(self):          
         self.piece = Piece(type(self.board.chosen.piece.piece), self.board.chosen.piece.player, self)        
         self.board.chosen.piece.piece = Empty(self.board.chosen.piece)
         self.board.chosen.piece.graphic = None
-        self.board.turn= 1-self.board.turn
+        if (self.piece.graphic== '♙') or (self.piece.graphic== '♟'):
+            self.piece= self.piece.piece.checkAscend()         
+        self.board.turn= 1-self.board.turn        
 
-    def getMoves(self):
+    def getMoves(self):               
         if self.piece.piece.playing and not self.board.moving:
             if not self.board.turn:
                 self.board.turn= self.piece.player.number
@@ -46,14 +41,14 @@ class Square:
                     square.square.configure(fg_color= 'grey', state= 'normal')
         elif self.board.moving:
             if self != self.board.chosen:
-                self.movePiece()
+                self.movePiece()            
             self.board.moving= False
             for square in self.board.squares:
                 square.square.configure(fg_color= square.data['color'], text=square.piece.graphic, text_color= square.piece.color)
                 if square.piece.player.number== self.board.turn:
                     square.square.configure(state= 'normal')
                 else:
-                    square.square.configure(state= 'disabled')
+                    square.square.configure(state= 'disabled')        
 
 class Piece:
     def __init__(self, name, player, square):        
@@ -80,7 +75,7 @@ class Board:
     def __init__(self, squaresData, pieceTypes):
         self.squaresData= squaresData
         self.pieceTypes= pieceTypes
-        self.board= ctk.CTk(); self.board.geometry('450x540'); self.board.title('4x5 Silverman Chess') #create the ui board        
+        self.board= ctk.CTk(); self.board.geometry('500x600'); self.board.title('4x5 Silverman Chess') #create the ui board        
         self.players= [Player(n, self) for n in range(2)] #create 2 players with unique numbers
         self.squares= []
         self.moving= False
