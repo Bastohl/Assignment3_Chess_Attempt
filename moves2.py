@@ -80,7 +80,7 @@ class LongRange:
             moves.extend(link)
         return moves
 
-class Castle(LongRange):
+class Rook(LongRange):
     def __init__(self, piece):
         self.graphic= {'black':'♖', 'white':'♜'}
         self.piece= piece
@@ -101,7 +101,7 @@ class Queen(LongRange):
         self.links= {'diagpp':[], 'diagnp':[], 'diagnn':[], 'diagpn':[], 'above':[], 'below':[], 'right':[], 'left':[]}
         super().__init__(self.graphic, self.piece, self.links)
 
-class Horse():
+class Knight():
     def __init__(self, piece):
         self.graphic= {'black':'♘', 'white':'♞'}
         self.piece= piece
