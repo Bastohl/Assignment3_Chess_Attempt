@@ -1,7 +1,7 @@
-# 4x4 Silverman Chess
+# 5x6 Chess
 
 ### Project Title:
-4x4 Silverman Chess
+5x6 Chess
 
 ### Description:
 This project is a simplified chess game with a 4x4 board, focusing on two players playing with fewer pieces than standard chess. The game is built using Python, using the `customtkinter` library for the graphical interface. It implements a variety of chess pieces, each with unique movement rules, and incorporates Object-Oriented Programming (OOP) concepts such as inheritance, polymorphism, and encapsulation. The `Square` class uses linked lists to represent connections between different board squares, and recursion is employed in calculating the valid moves for chess pieces, especially in `LongRange` and `ShortRange` classes.
