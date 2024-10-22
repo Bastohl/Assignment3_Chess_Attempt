@@ -1,134 +1,134 @@
 class ShortRange:
     def __init__(self, graphic, piece, links):
-        self.graphic= graphic
-        self.piece= piece
-        self.links= links
-        self.playing= True
+        self._graphic= graphic
+        self._piece= piece
+        self._links= links
+        self._playing= True
 
     def getSquares(self, square):  
         samePlayer= False
         opponentPlayer= False
-        if square!=None and square.piece:
-            samePlayer= (square.piece.player.number == self.piece.player.number) and (square.piece.piece.playing)
-            opponentPlayer= (square.piece.player.number != self.piece.player.number) and (square.piece.piece.playing)
+        if square!=None and square._piece:
+            samePlayer= (square._piece._player._number == self._piece._player._number) and (square._piece._piece._playing)
+            opponentPlayer= (square._piece._player._number != self._piece._player._number) and (square._piece._piece._playing)
         outsideBoard= (not square)
-        if outsideBoard or samePlayer or (opponentPlayer and self.link==self.condition1) or (self.link in self.condition2 and not square.piece.piece.playing):
+        if outsideBoard or samePlayer or (opponentPlayer and self._link==self._condition1) or (self._link in self._condition2 and not square._piece._piece._playing):
             pass
         else:
-            self.links[self.link]= square
+            self._links[self._link]= square
 
     def getMoves(self):         
-        for link in list(self.links.keys()):
-            self.links[link]= None
-            self.link= link
-            square= self.piece.square.links[self.link]            
+        for link in list(self._links.keys()):
+            self._links[link]= None
+            self._link= link
+            square= self._piece._square._links[self._link]            
             self.getSquares(square)
         moves= []
-        for link in self.links.values():
+        for link in self._links.values():
             if link:
                 moves.append(link)        
         return moves
 
 class King(ShortRange):
     def __init__(self, piece):
-        self.graphic= {'black':'♔', 'white':'♚'}
-        self.piece= piece
-        self.links= {'diagpp':0, 'diagnp':0, 'diagnn':0, 'diagpn':0, 'above':0, 'below':0, 'right':0, 'left':0}
-        self.condition1= None
-        self.condition2= [None,None]
-        super().__init__(self.graphic, self.piece, self.links)
+        self._graphic= {'black':'♔', 'white':'♚'}
+        self._piece= piece
+        self._links= {'diagpp':0, 'diagnp':0, 'diagnn':0, 'diagpn':0, 'above':0, 'below':0, 'right':0, 'left':0}
+        self._condition1= None
+        self._condition2= [None,None]
+        super().__init__(self._graphic, self._piece, self._links)
 
 class Pawn(ShortRange):
     def __init__(self, piece):
-        self.graphic= {'black':'♙', 'white':'♟'}
-        self.piece= piece
-        self.links= [{'diagpn':0, 'diagnn':0, 'below':0}, {'diagpp':0, 'diagnp':0, 'above':0}]
-        self.condition1= ['below','above'][self.piece.player.number]
-        self.condition2= [['diagnn','diagpn'], ['diagnp','diagpp']][self.piece.player.number]
-        super().__init__(self.graphic, self.piece, self.links[self.piece.player.number])
+        self._graphic= {'black':'♙', 'white':'♟'}
+        self._piece= piece
+        self._links= [{'diagpn':0, 'diagnn':0, 'below':0}, {'diagpp':0, 'diagnp':0, 'above':0}]
+        self._condition1= ['below','above'][self._piece._player._number]
+        self._condition2= [['diagnn','diagpn'], ['diagnp','diagpp']][self._piece._player._number]
+        super().__init__(self._graphic, self._piece, self._links[self._piece._player._number])
 
     def checkAscend(self):
-        if (self.piece.square.board.squares.index(self.piece.square)<4 and self.piece.square.board.turn==1) or (self.piece.square.board.squares.index(self.piece.square)>24 and self.piece.square.board.turn==0):
-            self.piece.piece= Queen(self.piece)
-            self.piece.graphic= self.piece.piece.graphic[self.piece.color]
-        return self.piece
+        if (self._piece._square._board._squares.index(self._piece._square)<4 and self._piece._square._board._turn==1) or (self._piece._square._board._squares.index(self._piece._square)>24 and self._piece._square._board._turn==0):
+            self._piece._piece= Queen(self._piece)
+            self._piece._graphic= self._piece._piece._graphic[self._piece._color]
+        return self._piece
 
 class LongRange:
     def __init__(self, graphic, piece, links):
-        self.graphic= graphic
-        self.piece= piece
-        self.links= links
-        self.playing= True
+        self._graphic= graphic
+        self._piece= piece
+        self._links= links
+        self._playing= True
 
     def getSquares(self, square):
         samePlayer= False
         opponentPlayer= False
-        if square!=None and square.piece:      
-            samePlayer= (square.piece.player.number == self.piece.player.number) and (square.piece.piece.playing)
-            opponentPlayer= (square.piece.player.number != self.piece.player.number) and (square.piece.piece.playing)            
+        if square!=None and square._piece:      
+            samePlayer= (square._piece._player._number == self._piece._player._number) and (square._piece._piece._playing)
+            opponentPlayer= (square._piece._player._number != self._piece._player._number) and (square._piece._piece._playing)            
         outsideBoard= (not square)        
         if outsideBoard or samePlayer:
             pass
         elif opponentPlayer:
-            self.links[self.link].append(square)
+            self._links[self._link].append(square)
         else:
-            self.links[self.link].append(square)
-            self.getSquares(square.links[self.link])                
+            self._links[self._link].append(square)
+            self.getSquares(square._links[self._link])                
 
     def getMoves(self):
-        for link in list(self.links.keys()):
-            self.links[link]= []
-            self.link= link
-            square= self.piece.square.links[self.link]            
+        for link in list(self._links.keys()):
+            self._links[link]= []
+            self._link= link
+            square= self._piece._square._links[self._link]            
             self.getSquares(square)
         moves= []
-        for link in self.links.values():
+        for link in self._links.values():
             moves.extend(link)
         return moves
 
 class Rook(LongRange):
     def __init__(self, piece):
-        self.graphic= {'black':'♖', 'white':'♜'}
-        self.piece= piece
-        self.links= {'above':[], 'below':[], 'right':[], 'left':[]}
-        super().__init__(self.graphic, self.piece, self.links)
+        self._graphic= {'black':'♖', 'white':'♜'}
+        self._piece= piece
+        self._links= {'above':[], 'below':[], 'right':[], 'left':[]}
+        super().__init__(self._graphic, self._piece, self._links)
 
 class Bishop(LongRange):
     def __init__(self, piece):
-        self.graphic= {'black':'♗', 'white':'♝'}
-        self.piece= piece
-        self.links= {'diagpp':[], 'diagnp':[], 'diagnn':[], 'diagpn':[]}
-        super().__init__(self.graphic, self.piece, self.links)
+        self._graphic= {'black':'♗', 'white':'♝'}
+        self._piece= piece
+        self._links= {'diagpp':[], 'diagnp':[], 'diagnn':[], 'diagpn':[]}
+        super().__init__(self._graphic, self._piece, self._links)
 
 class Queen(LongRange):
     def __init__(self, piece):
-        self.graphic= {'black':'♕', 'white':'♛'}
-        self.piece= piece
-        self.links= {'diagpp':[], 'diagnp':[], 'diagnn':[], 'diagpn':[], 'above':[], 'below':[], 'right':[], 'left':[]}
-        super().__init__(self.graphic, self.piece, self.links)
+        self._graphic= {'black':'♕', 'white':'♛'}
+        self._piece= piece
+        self._links= {'diagpp':[], 'diagnp':[], 'diagnn':[], 'diagpn':[], 'above':[], 'below':[], 'right':[], 'left':[]}
+        super().__init__(self._graphic, self._piece, self._links)
 
 class Knight():
     def __init__(self, piece):
-        self.graphic= {'black':'♘', 'white':'♞'}
-        self.piece= piece
-        self.playing= True
+        self._graphic= {'black':'♘', 'white':'♞'}
+        self._piece= piece
+        self._playing= True
 
     def getMoves(self):
-        self.links= {'abover':['above','diagpp'], 'abovel':['above','diagnp'], 'belowl':['below','diagnn'], 'belowr':['below','diagpn'], 'righta':['right','diagpp'], 'lefta':['left','diagnp'], 'leftb':['left','diagnn'], 'rightn':['right','diagpn']}
-        self.pLinks= self.piece.square.links
-        for link in self.links.keys():
-            linkV= self.links[link]
+        self._links= {'abover':['above','diagpp'], 'abovel':['above','diagnp'], 'belowl':['below','diagnn'], 'belowr':['below','diagpn'], 'righta':['right','diagpp'], 'lefta':['left','diagnp'], 'leftb':['left','diagnn'], 'rightn':['right','diagpn']}
+        self._pLinks= self._piece._square._links
+        for link in self._links.keys():
+            linkV= self._links[link]
             second= None
-            first= self.piece.square.links[linkV[0]]
+            first= self._piece._square._links[linkV[0]]
             if first:
-                second= first.links[linkV[1]]
+                second= first._links[linkV[1]]
             if second:
-                if second.piece.player.number== self.piece.player.number and second.piece.piece.playing:
+                if second._piece._player._number== self._piece._player._number and second._piece._piece._playing:
                     second= None
-            self.links[link]= second
-        return list(self.links.values())
+            self._links[link]= second
+        return list(self._links.values())
 
 class Empty:
     def __init__(self, piece):
-        self.graphic= {'black':None, 'white':None}
-        self.piece= piece; self.playing= False        
+        self._graphic= {'black':None, 'white':None}
+        self._piece= piece; self._playing= False        
